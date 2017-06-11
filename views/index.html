@@ -1,0 +1,40 @@
+<% include include/header.html%>
+<%articles.forEach(function(article){%>
+<div class="media">
+    <div class="media-left">
+        <a href="">
+        <img src="<%=article.user.avatar%>" alt="<%=article.user.username%>" class="media-object">
+        </a>
+    </div>
+    <div class="media-body">
+        <h3 class="media-heading">
+            <a href="/article/detail/<%=article._id%>"><%=article.title%></a>
+        </h3>
+        <p><%=article.content%></p>
+        <p><%=article.createAt.toLocaleString()%>|作者：<%=article.user.username%></p>
+    </div>
+</div>
+<%})%>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+    <%if(pageNum >1){%>
+        <li>
+            <a href="/?pageNum=<%=pageNum-1%>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <%}%>
+        <%for(let i=1;i<= totalPages;i++){%>
+        <li class='<%=i==pageNum?"active":""%>'><a href="/?pageNum=<%=i%>"><%=i%></a></li>
+        <%}%>
+        <%if(pageNum < totalPages){%>
+        <li>
+            <a href="/?pageNum=<%=pageNum+1%>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <%}%>
+
+    </ul>
+</nav>
+<% include include/footer.html%>

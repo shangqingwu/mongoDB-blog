@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <style>
+        img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">博客</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+                <!--如果user有值，就说明登录成功，显示首页、退出、发表文章，没有值，就说明登录失败，显示首页、注册、登录-->
+                <%if(user){%>
+                <li><a href="/user/signout">退出</a></li>
+                <li><a href="/article/add">发表文章</a></li>
+                <%}else{%>
+                <li><a href="/user/signup">注册</a></li>
+                <li><a href="/user/signin">登录</a></li>
+                <%}%>
+            </ul>
+            <form action="/" class="navbar-form navbar-left" role="search"><!--action默认提交到当前路径，但是我们希望的是，返回到首页，所以要提交到根目录/；-->
+                <div class="form-group">
+                    <input type="text" class="form-control" name="keyword" placeholder="请输入关键字" value="<%=keyword%>"><!--必须得写name属性，会将name属性对应的值会作为属性名，自己输入的内容会作为属性值传给后台；-->
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <%if(user){%>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#">
+                        <img src="<%=user.avatar%>" alt="">
+                        <%=user.username%>
+                    </a>
+                </li>
+            </ul>
+            <%}%>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <%if(success){%>
+    <div class="alert alert-success"><%=success%></div><!--成功的消息-->
+    <%}%>
+    <%if(error){%>
+    <div class="alert alert-danger"><%=error%></div><!--失败的消息-->
+    <%}%>
